@@ -1,0 +1,25 @@
+OVERVIEW:
+
+Designed to take advantage of the Google Plus Android functionality that automatically uploads all photos taken with the phone camera to a Picaca (Google Photo) album named 'Instant Upload'.
+Use automator or cron to schedule this app to run periodically and you have a poor man's iCloud:)
+
+
+Sample usage:
+
+public static void main (args){
+        Photo ph = new Photo("GOOGLE_USER","PASSWORD")
+        AlbumEntry instantUploadAlbum = ph.getInstantUploadAlbum()
+
+        if (instantUploadAlbum == null){
+            println "Instant Upload album not found for user, exiting..."
+            return
+        }
+
+        List pics = ph.getRecentlyUploadedPics(instantUploadAlbum)
+        if (pics.size() > 0){
+            ph.downloadPhotos(pics)
+            ph.importPhotosToiPhoto()
+        }else{
+            println "No pics to download and import..."
+        }
+    }
